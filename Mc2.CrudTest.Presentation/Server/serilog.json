@@ -1,0 +1,30 @@
+{
+  "Serilog": {
+    "Using": [  "Serilog.Sinks.File" ],
+    "MinimumLevel": "Debug",
+    "WriteTo": [
+      {
+        "Name": "File",
+        "Args": {
+          "path": "Logs/logs.json",
+          "outputTemplate": "[{Timestamp:HH:mm:ss} {SourceContext} [{Level}] {Message}{NewLine}{Exception}",
+          "formatter": {
+            "type": "Serilog.Formatting.Compact.CompactJsonFormatter, Serilog.Formatting.Compact"
+          },
+          "fileSizeLimitBytes": 1048576,
+          "rollOnFileSizeLimit": true,
+          "retainedFileCountLimit": null,
+          "rollingInterval": "Day"
+        }
+      }
+    ],
+    "Enrich": [
+      "FromLogContext",
+      "WithMachineName",
+      "WithThreadId"
+    ],
+    "Properties": {
+      "Application": "Crud Test"
+    }
+  }
+}

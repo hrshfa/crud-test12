@@ -1,0 +1,47 @@
+﻿@page "/customers"
+@using Mc2.CrudTest.Shared.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<h3>Customers</h3>
+
+<div class="card mt-4 mb-2">
+    <h4 class="card-header">Countries List</h4>
+    <div class="card-body">
+
+        <button @onclick="@Add_Click" class="btn btn-success mb-2"><i class="bi bi-plus-lg" aria-hidden="true" /> Add </button>
+        <button @onclick="@Edit_Click" class="btn btn-primary mb-2"><i class="bi bi-pencil-fill" aria-hidden="true" /> Edit </button>
+        <button @onclick="@Delete_Click" class="btn btn-danger mb-2"><i class="bi bi-trash-fill" aria-hidden="true" /> Delete </button>
+
+        <RadzenDataGrid AllowColumnResize="true"
+                        AllowColumnReorder="true"
+                        IsLoading="@IsGridLoading"
+                        AllowFiltering="true"
+                        AllowPaging="true"
+                        PageSize="50"
+                        AllowSorting="true"
+                        Data="@CustomersList"
+                        TItem="CustomerDto"
+                        Count="@TotalRow"
+                        LoadData="@LoadData"
+                        @ref="Grid"
+                        PagerPosition=Radzen.PagerPosition.TopAndBottom
+                        EmptyText="The table is empty"
+                        SelectionMode="Radzen.DataGridSelectionMode.Single"
+                        @bind-Value=@selectedRow>
+            <Columns>
+                <RadzenDataGridColumn TItem="CustomerDto" Property="Firstname" Title="Firstname" Width="100px" />
+                <RadzenDataGridColumn TItem="CustomerDto" Property="Lastname" Title="Lastname" Width="100px" />
+                <RadzenDataGridColumn TItem="CustomerDto" Property="DateOfBirth" Title="DateOfBirth" Width="100px" >
+                    <Template Context="data">
+                        <RadzenLabel Text="@(data.DateOfBirth.ToString("yyyy/MM/dd"))" />
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="CustomerDto" Property="PhoneNumber" Title="PhoneNumber" Width="100px" />
+                <RadzenDataGridColumn TItem="CustomerDto" Property="Email" Title="Email" Width="100px" />
+                <RadzenDataGridColumn TItem="CustomerDto" Property="BankAccountNumber" Title="BankAccountNumber" Width="100px" />
+            </Columns>
+        </RadzenDataGrid>
+    </div>
+</div>
+<UpdateCustomer Model="Model" @ref="Modal" CloseEventCallback="OnDialogClose" />

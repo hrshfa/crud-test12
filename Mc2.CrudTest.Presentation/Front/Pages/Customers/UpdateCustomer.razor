@@ -1,0 +1,96 @@
+﻿@if (ShowModal)
+{
+    <div class="modal fade show d-block overflow-auto" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content  alert-info">
+                <div class="modal-header  alert-dark">
+                    <h5 class="modal-title " id="exampleModalLabel"> Edit Countries </h5>
+                    <button type="button" class="close-btn-custom close" data-dismiss="modal" aria-label="Close"
+                        @onclick="OnClose">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body  alert-light">
+                    @if (Model == null)
+                    {
+                        <p><em>Loading...</em></p>
+                    }
+                    else
+                    {
+                        <EditForm OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit" Model="Model">
+                            <DataAnnotationsValidator />
+
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label for="Firstname" class="col-sm-4 label-custom col-md-5 px-4">Firstname:</label>
+                                    <InputText type="text"
+                                       class="form-control  px-2" @bind-Value="@Model.Firstname"
+                                       id="Firstname" placeholder="Firstname"></InputText>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label for="Lastname" class="col-sm-4 label-custom col-md-5 px-4">Lastname:</label>
+                                    <InputText type="text"
+                                       class="form-control  px-2" @bind-Value="@Model.Lastname"
+                                       id="Lastname" placeholder="Lastname"></InputText>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label for="DateOfBirth" class="col-sm-4  label-custom col-md-5 px-4">DateOfBirth:</label>
+                                    <RadzenDatePicker TValue="DateTimeOffset"
+                                              Class=" p-0 px-2 mx-2  date-pic date-pic-m input-widts rounded-1 font-12 border-color border-1 "
+                                              Placeholder="Date Of Birth"
+                                              
+                                              @bind-Value="Model.DateOfBirth"
+                                              Change="e=>StartDateValue_Change(e)"
+                                              DateFormat="yyyy/MM/dd" />
+                                </div>
+                            </div>
+                            <div class=" my-2">
+                                <div class="form-group col">
+                                    <label for="PhoneNumber" class="col-sm-4  label-custom col-md-5 px-4">PhoneNumber:</label>
+                                    <InputText type="text"
+                                       class="form-control  px-2" @bind-Value="@Model.PhoneNumber"
+                                       id="PhoneNumber" placeholder="PhoneNumber"></InputText>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label for="Email" class="col-sm-4  label-custom col-md-5 px-4">Email Address:</label>
+                                    <InputText type="text"
+                                       class="form-control  px-2" @bind-Value="@Model.Email"
+                                       id="DialCodes" placeholder="Email Address"></InputText>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label for="BankAccountNumber" class="col-sm-4 label-custom col-md-5 px-4">Bank Account Number:</label>
+                                    <InputText type="text"
+                                       class="form-control  px-2" @bind-Value="@Model.BankAccountNumber"
+                                       id="BankAccountNumber" placeholder="BankAccountNumber"></InputText>
+                                </div>
+                            </div>
+                            <ValidationSummary />
+                            <div class="row">
+                                @if (IsProcessing)
+                                {
+                                    <button type="submit" class="btn btn-success btn-block disabled"><i class="fas fa-sign-in-alt"></i> Please wait...</button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-primary m-2 edit-btn"> Save </button>
+                                }
+                                <button type="button" class="btn btn-secondary m-1" data-dismiss="modal"
+                                @onclick="OnClose">
+                                    Close
+                                </button>
+                            </div>
+                        </EditForm>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
